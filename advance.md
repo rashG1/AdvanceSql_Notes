@@ -78,18 +78,19 @@ while (iter.next()) {
 
 iter.close();
 
-**Explanation:**
+Explanation:
 
 SQLJ Iterator Definition:
 
-#sql iterator deptInfoIter (String dept_name, int avgSal);
+`#sql iterator deptInfoIter (String dept_name, int avgSal);`
 
-This defines an iterator deptInfoIter that will hold two values: dept_name (a String) and avgSal (an int representing the average salary). It ensures that the SQL query will return values of the correct types.
+This defines an iterator `deptInfoIter` that will hold two values: `dept_name` (a `String`) and `avgSal` (an `int` representing the average salary). It ensures that the SQL query will return values of the correct types.
 
 SQL Execution:
 
-#sql iter = { SELECT dept_name, AVG(salary) FROM instructor GROUP BY dept_name };
-The SQL query is embedded in the Java code using the #sql block. The query groups instructors by department and calculates the average salary for each group.
+`#sql iter = { SELECT dept_name, AVG(salary) FROM instructor GROUP BY dept_name };`
+
+The SQL query is embedded in the Java code using the `#sql` block. The query groups instructors by department and calculates the average salary for each group.
 
 Fetching and Using Results:
 
@@ -101,38 +102,37 @@ while (iter.next()) {
 
 The while (iter.next()) loop iterates through the result set. Each time, it fetches the department name and average salary and prints them.
 
-Iterator Closure:
+### Iterator Closure:
 
+```java
 iter.close();
+```
 After processing all results, the iterator is closed to free up resources.
 
-Why SQLJ is Beneficial:
+### Why SQLJ is Beneficial:
 
-- Compile-Time Checking: Ensures that SQL syntax and data types are checked at compile time, reducing the risk of runtime errors.
-- Easier Error Handling: Developers can avoid handling certain errors at runtime, which simplifies the code.
-- Better Performance: Because SQL is embedded and static, SQLJ can optimize SQL execution compared to the fully dynamic nature of JDBC.
+- **Compile-Time Checking:** Ensures that SQL syntax and data types are checked at compile time, reducing the risk of runtime errors.
+- **Easier Error Handling:** Developers can avoid handling certain errors at runtime, which simplifies the code.
+- **Better Performance:** Because SQL is embedded and static, SQLJ can optimize SQL execution compared to the fully dynamic nature of JDBC.
 
-**Difference between SQLJ and JDBC**
+### Difference between SQLJ and JDBC
 
 SQLJ and JDBC are both Java APIs for interacting with databases but serve different purposes.
 
-JDBC (Java Database Connectivity): A dynamic API allowing applications to run SQL queries at runtime. It gives full control over query execution but requires manual error handling, with errors detected only during execution.
+- **JDBC (Java Database Connectivity):** A dynamic API allowing applications to run SQL queries at runtime. It gives full control over query execution but requires manual error handling, with errors detected only during execution.
 
-SQLJ: A higher-level API for embedding static SQL directly into code. It checks SQL syntax and types at compile time, offering better safety but with less flexibility than JDBC. SQLJ internally relies on JDBC to connect to databases.
+- **SQLJ:** A higher-level API for embedding static SQL directly into code. It checks SQL syntax and types at compile time, offering better safety but with less flexibility than JDBC. SQLJ internally relies on JDBC to connect to databases.
 
-Feature            | JDBC                                       | SQLJ
+| Feature            | JDBC                                       | SQLJ                                      |
+|--------------------|--------------------------------------------|-------------------------------------------|
+| SQL Queries        | Dynamic (runtime)                          | Static (compile-time)                     |
+| Error Checking     | At runtime                                 | At compile time (syntax and types)        |
+| Control            | Full control over query construction       | Limited to predefined queries             |
+| Usage              | Suitable for dynamic queries               | Suitable for static, predefined queries   |
 
-SQL Queries        Dynamic (runtime)                             Static (compile-time)
-Error Checking     At runtime                                    At compile time (syntax and types)
-Control            Full control over query construction          Limited to predefined queries
-Usage              Suitable for dynamic queries                  Suitable for static, predefined queries
-
-**Very Important**
+### Very Important
 
 SQLJ doesn’t handle the actual communication with the database itself. It relies on JDBC for that part. JDBC is the underlying mechanism used to connect to the database, send the SQL queries, and receive the results. SQLJ provides a more structured, static approach to writing queries, but when it comes to executing them, it passes those requests to JDBC.
-
-
-
 
 
 
